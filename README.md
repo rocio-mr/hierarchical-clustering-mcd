@@ -47,17 +47,6 @@ El dataset original se encuentra dividido en dos conjuntos:
 | 🟩 Test     |      7,532 |
 | **Total**   | **18,846** |
 
-Para la exploración inicial se puede utilizar el dataset completo mediante:
-
-```python
-dataset = fetch_20newsgroups(
-    subset='all',
-    remove=('headers', 'footers', 'quotes')
-)
-```
-
-La opción `remove` permite excluir determinadas partes de los mensajes que pueden introducir información adicional no relacionada directamente con el contenido textual.
-
 ---
 
 ## 🏷️ Categorías
@@ -86,16 +75,6 @@ El dataset contiene **20 categorías temáticas**:
 | 17 | `talk.politics.mideast`    |
 | 18 | `talk.politics.misc`       |
 | 19 | `talk.religion.misc`       |
-
-Las categorías abarcan diferentes áreas, principalmente:
-
-* 💻 Computación y tecnología
-* 🚗 Automóviles y motocicletas
-* ⚾ Deportes
-* 🔬 Ciencia
-* 🛒 Compra y venta
-* ⛪ Religión
-* 🗣️ Temas sociales y políticos
 
 ---
 
@@ -128,19 +107,19 @@ El flujo general será:
 ---
 # 📚 PART 2: Hierarchical Clustering - Mall Customers
 
-📌 Descripción del proyecto
+## 📌 Descripción del proyecto
 
 Este proyecto tiene como objetivo aplicar técnicas de aprendizaje no supervisado (clustering jerárquico) para identificar grupos de clientes con características y comportamientos similares a partir del dataset Mall Customers.
 
 El análisis busca descubrir segmentos de clientes sin utilizar una variable objetivo previamente definida. Para ello, se aplican diferentes algoritmos de clustering y se comparan sus resultados mediante métricas de evaluación.
 
-📂 Dataset
+## 📂 Dataset
 
 El dataset utilizado es Mall Customers, disponible en Kaggle.
 
 Este conjunto de datos contiene información sobre clientes de un centro comercial y permite analizar diferentes características demográficas y de comportamiento de compra.
 
-📋 Variables principales
+## 📋 Variables principales
 Variable	Descripción	Tipo
 CustomerID	Identificador único del cliente	Numérica
 Gender	Género del cliente	Categórica
@@ -151,7 +130,7 @@ Spending Score (1-100)	Puntuación de gasto asignada al cliente	Numérica
 ---
 # 📚 PART 3: Imagen Segmentation using Hierarchical Clustering - BSDS500 (Berkeley Segmentation Dataset and Benckmarks 500)
 
-📌 Descripción del proyecto
+## 📌 Descripción del proyecto
 
 En este proyecto se desarrolla un método de segmentación de imágenes mediante aprendizaje no supervisado, utilizando técnicas de clustering jerárquico sobre imágenes pertenecientes al dataset BSDS500.
 
@@ -159,7 +138,7 @@ El objetivo es agrupar los píxeles de cada imagen según características visua
 
 A diferencia de un problema de clasificación, donde el modelo aprende a asignar una clase previamente definida, en este proyecto el algoritmo busca descubrir automáticamente grupos de píxeles con características semejantes.
 
-📂 Dataset: BSDS500
+## 📂 Dataset: BSDS500
 
 El Berkeley Segmentation Dataset and Benchmarks 500 (BSDS500) es un dataset utilizado principalmente para investigación en segmentación de imágenes y detección de contornos.
 
@@ -176,7 +155,7 @@ Una característica importante del BSDS500 es que las imágenes cuentan con segm
 
 Por lo tanto, el dataset permite comparar una segmentación generada automáticamente con diferentes interpretaciones humanas de las regiones presentes en una imagen.
 
-🔄 Preparación de las imágenes
+## 🔄 Preparación de las imágenes
 
 Para aplicar clustering, cada imagen se transforma desde su representación bidimensional a una matriz donde cada fila corresponde a un píxel.
 
@@ -190,7 +169,7 @@ Número de píxeles × 3
 
 De esta manera, cada píxel se convierte en una observación que puede ser agrupada mediante el algoritmo de clustering.
 
-🎨 Representación RGB
+## 🎨 Representación RGB
 
 Cada píxel está compuesto por tres valores:
 

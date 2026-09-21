@@ -103,7 +103,27 @@ El flujo general será:
       ▼
 🌳 Clustering jerárquico
 ```
+### 🔬 Metodología aplicada
 
+
+Para facilitar el procesamiento y mantener una representación equilibrada de las categorías, se seleccionó una muestra estratificada de **200 documentos**, tomando 10 documentos de cada una de las 20 categorías.
+
+Los documentos fueron preprocesados y posteriormente transformados en vectores mediante el modelo **`all-MiniLM-L6-v2`**, obteniendo embeddings de 384 dimensiones.
+
+Posteriormente, se aplicó **PCA conservando el 90% de la varianza**, con el objetivo de reducir la dimensionalidad antes de calcular las distancias.
+
+Finalmente, se aplicó clustering jerárquico utilizando tres métodos de enlace:
+
+- 🔗 **Single Linkage**
+- 🔗 **Complete Linkage**
+- 🔗 **Average Linkage**
+
+La distancia utilizada fue la **distancia coseno**, adecuada para comparar representaciones vectoriales de texto.
+
+
+## 🔎 Hallazgos
+
+Los resultados alcanzados al probar con cada método de enlace fueron los siguientes: En cuanto al comportamiento de **Single Linkage** estuvo condicionado por el efecto de chaining, lo cual indica que este método provoca que documentos que son relativamente diferentes terminen conectados a tráves de una secuencia de documentos intermedios. Mientras que el **Complete Linkage** produjo agrupamientos que fueron más compactos, esto se debe a que considera las distancias entre los elementos más alejados de cada grupo. Por último, **Average Linkage** presentó un comportamiento intermedio al considerar la distancia promedio entre los elementos que conforman los grupos. Así se concluye que el método que presentó el mejor desempeño fue de Average ya que obtuvo un ARI de 0.2957 y un V-measure de 0.6179. 
 ---
 # 📚 PART 2: Hierarchical Clustering - Mall Customers
 
@@ -126,6 +146,69 @@ Gender	Género del cliente	Categórica
 Age	Edad del cliente	Numérica
 Annual Income (k$)	Ingreso anual en miles de dólares	Numérica
 Spending Score (1-100)	Puntuación de gasto asignada al cliente	Numérica
+
+## 🔬 Metodología aplicada
+
+Para realizar la segmentación se utilizaron las variables numéricas:
+
+- **Age**
+- **Annual Income (k$)**
+- **Spending Score (1-100)**
+
+La variable `CustomerID` no fue utilizada debido a que únicamente funciona como identificador y no aporta información relevante para la segmentación.
+
+Tampoco se utilizó `Gender` en el clustering, ya que el objetivo fue realizar la segmentación a partir de las características numéricas relacionadas con la edad, los ingresos y el comportamiento de gasto.
+
+Antes de aplicar el clustering, las variables fueron estandarizadas mediante `StandardScaler` para evitar que una variable con una escala mayor domine el cálculo de las distancias.
+
+Se utilizó **distancia euclidiana** y se compararon tres métodos de enlace:
+
+- 🔗 **Single Linkage**
+- 🔗 **Complete Linkage**
+- 🔗 **Average Linkage**
+
+Finalmente, se generaron **5 clusters** para analizar los diferentes segmentos de clientes.
+
+---
+
+## 🌳 Análisis de los dendrogramas
+
+Los dendrogramas permitieron observar cómo los clientes se van agrupando progresivamente a diferentes niveles de distancia.
+
+El corte utilizado permitió obtener cinco grupos, facilitando la interpretación de diferentes perfiles de clientes.
+
+Los tres métodos de enlace produjeron estructuras diferentes debido a la forma en que calculan la distancia entre grupos.
+
+---
+
+## 👥 Perfil de los segmentos
+
+Para interpretar los clusters se calculó el promedio de:
+
+- Edad
+- Ingreso anual
+- Spending Score
+
+Esto permitió identificar las principales características de cada segmento.
+
+Por ejemplo, los grupos pueden diferenciarse entre clientes con:
+
+- 💰 Ingresos altos y alto nivel de gasto.
+- 💰 Ingresos altos y bajo nivel de gasto.
+- 🛍️ Ingresos bajos y alto nivel de gasto.
+- 🛍️ Ingresos bajos y bajo nivel de gasto.
+- 👤 Perfiles intermedios según edad, ingresos y gasto.
+
+> Los perfiles concretos dependen de los resultados obtenidos por cada método de enlace.
+
+---
+
+## 🔎 Hallazgos
+
+El análisis demostró que la elección del método de enlace es fundamental ya que modifica la forma en la que se construyen los segmentos. En primer lugar el, **Single Linkage** puede generar agrupamientos entre clientes que se encuentren más cercanos entre si, mientras que el **Complete Linkage** tiende a generar grupos que son más compactos.
+**Average Linkage** busca un equilibrio al considerar las distancias promedio entre los elementos que conforman los grupos.
+Entonces, a partir de los perfiles obtenidos, se pudo observar que las variables relacionadas con el **ingreso anual y el nivel de gasto** permiten diferenciar claramente entre determinados grupos de clientes. 
+El método que presentó el comportamiento más favorable en este segundo experimento fue el Average Linkage que presentó el mejor desempeño en el dataset Mall Customers. Obtuvo un ARI de 0.2957 y un V-Measure de 0.6179, superando a Complete y Single en ambas métricas.
 
 ---
 # 📚 PART 3: Imagen Segmentation using Hierarchical Clustering - BSDS500 (Berkeley Segmentation Dataset and Benckmarks 500)
@@ -180,6 +263,27 @@ donde:
 🔴 R → Red
 🟢 G → Green
 🔵 B → Blue
+
+## 🔬 Metodología aplicada
+
+Para realizar el experimento se seleccionó una imagen del conjunto de entrenamiento de BSDS500.
+
+Debido al elevado número de píxeles de las imágenes originales, la imagen fue redimensionada a **150 × 150 píxeles**, obteniendo un total de:
+
+**150 × 150 = 22,500 píxeles**
+
+Cada píxel fue representado mediante sus valores RGB:
+
+```text
+[R, G, B]
+```
+
+## 🔎 Hallazgos
+
+Los resultados muestran que este tipo de clustering jerárquico puede usarse para realizar una segmentación básica de imágenes basándose solamente en la información que ofrece el color.
+Los píxeles que poseían valores RGB similares tienden a pertenecer al mismo clúster, permitiendo separar regiones visualmente diferenciadas. En el experimento se empleó una imagen que figura en el código y se aplicó los tres métodos correspondientes: Simple Linkage, Complete Linkage, Average Linkage. En este experimento, los métodos que considero presentaron mejor desempeño fueron el Complete y Average ya que lograron segmentar mejor las regiones en la imágenes tal como se aprecia en la reconstrucción de la imagen al final del código. La imagen empleada fueron dos caballos y en el resultado se puedo apreciar la silueta de ambos de manera más completa usando el Complete y Average Linkage. Asimismo, no se logró realizar muchas pruebas pero podría ser a futuro probar más los hiper parámetros y de esa manera quizá puedan obtenerse mejores resultados. 
+---
+
 ## 👩‍💻 Autora
 
 **Milesa Rocio Maquera Ramos**

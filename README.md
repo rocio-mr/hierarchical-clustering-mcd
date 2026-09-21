@@ -103,7 +103,7 @@ El flujo general será:
       ▼
 🌳 Clustering jerárquico
 ```
-### 🔬 Metodología aplicada
+## 🔬 Metodología aplicada
 
 
 Para facilitar el procesamiento y mantener una representación equilibrada de las categorías, se seleccionó una muestra estratificada de **200 documentos**, tomando 10 documentos de cada una de las 20 categorías.
@@ -120,11 +120,12 @@ Finalmente, se aplicó clustering jerárquico utilizando tres métodos de enlace
 
 La distancia utilizada fue la **distancia coseno**, adecuada para comparar representaciones vectoriales de texto.
 
-
+ --- 
+ 
 ## 🔎 Hallazgos
 
 Los resultados alcanzados al probar con cada método de enlace fueron los siguientes: En cuanto al comportamiento de **Single Linkage** estuvo condicionado por el efecto de chaining, lo cual indica que este método provoca que documentos que son relativamente diferentes terminen conectados a tráves de una secuencia de documentos intermedios. Mientras que el **Complete Linkage** produjo agrupamientos que fueron más compactos, esto se debe a que considera las distancias entre los elementos más alejados de cada grupo. Por último, **Average Linkage** presentó un comportamiento intermedio al considerar la distancia promedio entre los elementos que conforman los grupos. Así se concluye que el método que presentó el mejor desempeño fue de Average ya que obtuvo un ARI de 0.2957 y un V-measure de 0.6179. 
----
+
 # 📚 PART 2: Hierarchical Clustering - Mall Customers
 
 ## 📌 Descripción del proyecto
@@ -277,12 +278,12 @@ Cada píxel fue representado mediante sus valores RGB:
 ```text
 [R, G, B]
 ```
-
+--- 
 ## 🔎 Hallazgos
 
 Los resultados muestran que este tipo de clustering jerárquico puede usarse para realizar una segmentación básica de imágenes basándose solamente en la información que ofrece el color.
 Los píxeles que poseían valores RGB similares tienden a pertenecer al mismo clúster, permitiendo separar regiones visualmente diferenciadas. En el experimento se empleó una imagen que figura en el código y se aplicó los tres métodos correspondientes: Simple Linkage, Complete Linkage, Average Linkage. En este experimento, los métodos que considero presentaron mejor desempeño fueron el Complete y Average ya que lograron segmentar mejor las regiones en la imágenes tal como se aprecia en la reconstrucción de la imagen al final del código. La imagen empleada fueron dos caballos y en el resultado se puedo apreciar la silueta de ambos de manera más completa usando el Complete y Average Linkage. Asimismo, no se logró realizar muchas pruebas pero podría ser a futuro probar más los hiper parámetros y de esa manera quizá puedan obtenerse mejores resultados. 
----
+
 
 ## 👩‍💻 Autora
 
